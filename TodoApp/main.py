@@ -5,6 +5,7 @@ from database import engine, SessionLocal
 from typing import Annotated
 from sqlalchemy.orm import Session
 from starlette import status
+from todo_request import TodoRequest
 
 app = FastAPI()
 
@@ -21,7 +22,7 @@ def get_db():
 db_dependancy = Annotated[Session,Depends(get_db)]
 
 
-@app.get("/",status_code=status.HTTP_200_OK)
+@app.get("/get-all",status_code=status.HTTP_200_OK)
 async def read_all(db: db_dependancy):
     return db.query(Todos).all()
 
@@ -32,3 +33,10 @@ async def read_todo(db:db_dependancy,todo_id:int = Path(gt=0)):
         return todo_model
     else:
         raise HTTPException(status_code=404,detail='Todo not found.')
+    
+@app.post("/todo",status_code=status.HTTP_201_CREATED)
+async def create_todo(db:db_dependancy,todo_request:TodoRequest):
+    todo_model = Todos(**todo_request.model_dump())
+    
+    db.add(todo_model)
+    db.commit()
