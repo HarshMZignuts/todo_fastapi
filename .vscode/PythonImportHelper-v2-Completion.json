@@ -88,6 +88,38 @@
         "documentation": {}
     },
     {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "FastAPI",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -150,6 +182,30 @@
         "description": "models",
         "isExtraImport": true,
         "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Todos",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Users",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
         "documentation": {}
     },
     {
@@ -217,6 +273,22 @@
         "documentation": {}
     },
     {
+        "label": "Annotated",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
         "label": "Session",
         "importPath": "sqlalchemy.orm",
         "description": "sqlalchemy.orm",
@@ -270,6 +342,22 @@
         "description": "starlette",
         "isExtraImport": true,
         "detail": "starlette",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "starlette",
+        "description": "starlette",
+        "isExtraImport": true,
+        "detail": "starlette",
+        "documentation": {}
+    },
+    {
+        "label": "TodoRequest",
+        "importPath": "todo_request",
+        "description": "todo_request",
+        "isExtraImport": true,
+        "detail": "todo_request",
         "documentation": {}
     },
     {
@@ -337,6 +425,14 @@
         "documentation": {}
     },
     {
+        "label": "CryptContext",
+        "importPath": "passlib.context",
+        "description": "passlib.context",
+        "isExtraImport": true,
+        "detail": "passlib.context",
+        "documentation": {}
+    },
+    {
         "label": "OAuth2PasswordRequestForm",
         "importPath": "fastapi.security",
         "description": "fastapi.security",
@@ -366,6 +462,30 @@
         "description": "jose",
         "isExtraImport": true,
         "detail": "jose",
+        "documentation": {}
+    },
+    {
+        "label": "UserVerification",
+        "importPath": "user_verification_request",
+        "description": "user_verification_request",
+        "isExtraImport": true,
+        "detail": "user_verification_request",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
         "documentation": {}
     },
     {
@@ -474,6 +594,14 @@
     },
     {
         "label": "admin",
+        "importPath": "routers",
+        "description": "routers",
+        "isExtraImport": true,
+        "detail": "routers",
+        "documentation": {}
+    },
+    {
+        "label": "users",
         "importPath": "routers",
         "description": "routers",
         "isExtraImport": true,
@@ -634,6 +762,51 @@
         "documentation": {}
     },
     {
+        "label": "get_db",
+        "kind": 2,
+        "importPath": "TodoApp.routers.users",
+        "description": "TodoApp.routers.users",
+        "peekOfCode": "def get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]\nuser_dependancy = Annotated[dict,Depends(get_current_user)]\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')",
+        "detail": "TodoApp.routers.users",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "TodoApp.routers.users",
+        "description": "TodoApp.routers.users",
+        "peekOfCode": "router = APIRouter(\n    prefix= '/user',\n    tags=['user']\n)\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()",
+        "detail": "TodoApp.routers.users",
+        "documentation": {}
+    },
+    {
+        "label": "db_dependancy",
+        "kind": 5,
+        "importPath": "TodoApp.routers.users",
+        "description": "TodoApp.routers.users",
+        "peekOfCode": "db_dependancy = Annotated[Session,Depends(get_db)]\nuser_dependancy = Annotated[dict,Depends(get_current_user)]\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\n@router.get(\"/\", status_code=status.HTTP_200_OK)\nasync def get_user(user: user_dependancy,db:db_dependancy):\n    if user is None:\n        raise HTTPException(status_code=401,detail='Authentication failed.')\n    return db.query(Users).filter(Users.id == user.get('id')).first()\n@router.put(\"/password\",status_code=status.HTTP_201_CREATED)\nasync def change_password(user: user_dependancy,db:db_dependancy",
+        "detail": "TodoApp.routers.users",
+        "documentation": {}
+    },
+    {
+        "label": "user_dependancy",
+        "kind": 5,
+        "importPath": "TodoApp.routers.users",
+        "description": "TodoApp.routers.users",
+        "peekOfCode": "user_dependancy = Annotated[dict,Depends(get_current_user)]\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\n@router.get(\"/\", status_code=status.HTTP_200_OK)\nasync def get_user(user: user_dependancy,db:db_dependancy):\n    if user is None:\n        raise HTTPException(status_code=401,detail='Authentication failed.')\n    return db.query(Users).filter(Users.id == user.get('id')).first()\n@router.put(\"/password\",status_code=status.HTTP_201_CREATED)\nasync def change_password(user: user_dependancy,db:db_dependancy\n                          ,user_verification: UserVerification):",
+        "detail": "TodoApp.routers.users",
+        "documentation": {}
+    },
+    {
+        "label": "bcrypt_context",
+        "kind": 5,
+        "importPath": "TodoApp.routers.users",
+        "description": "TodoApp.routers.users",
+        "peekOfCode": "bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\n@router.get(\"/\", status_code=status.HTTP_200_OK)\nasync def get_user(user: user_dependancy,db:db_dependancy):\n    if user is None:\n        raise HTTPException(status_code=401,detail='Authentication failed.')\n    return db.query(Users).filter(Users.id == user.get('id')).first()\n@router.put(\"/password\",status_code=status.HTTP_201_CREATED)\nasync def change_password(user: user_dependancy,db:db_dependancy\n                          ,user_verification: UserVerification):\n    if user is None:",
+        "detail": "TodoApp.routers.users",
+        "documentation": {}
+    },
+    {
         "label": "CreateUserRequest",
         "kind": 6,
         "importPath": "TodoApp.create_user_request",
@@ -692,7 +865,7 @@
         "kind": 5,
         "importPath": "TodoApp.main",
         "description": "TodoApp.main",
-        "peekOfCode": "app = FastAPI()\nmodels.Base.metadata.create_all(bind= engine) \napp.include_router(auth.router)\napp.include_router(todos.router)\napp.include_router(admin.router)",
+        "peekOfCode": "app = FastAPI()\nmodels.Base.metadata.create_all(bind= engine) \napp.include_router(auth.router)\napp.include_router(todos.router)\napp.include_router(admin.router)\napp.include_router(users.router)",
         "detail": "TodoApp.main",
         "documentation": {}
     },
@@ -721,6 +894,15 @@
         "description": "TodoApp.todo_request",
         "peekOfCode": "class TodoRequest(BaseModel):\n    title: str = Field(min_length=3)\n    description: str = Field(min_length=3,max_length=100)\n    priority: int = Field(gt=0,lt=6)\n    complete: bool",
         "detail": "TodoApp.todo_request",
+        "documentation": {}
+    },
+    {
+        "label": "UserVerification",
+        "kind": 6,
+        "importPath": "TodoApp.user_verification_request",
+        "description": "TodoApp.user_verification_request",
+        "peekOfCode": "class UserVerification(BaseModel):\n    password: str\n    new_password: str = Field(min_length=6)",
+        "detail": "TodoApp.user_verification_request",
         "documentation": {}
     }
 ]
