@@ -825,11 +825,20 @@
         "documentation": {}
     },
     {
+        "label": "#SQLALCHEMY_DATABASE_URL",
+        "kind": 5,
+        "importPath": "TodoApp.database",
+        "description": "TodoApp.database",
+        "peekOfCode": "#SQLALCHEMY_DATABASE_URL = 'sqlite:///./todosapp.db' # for sqllite3 db for local use\n# SQLALCHEMY_DATABASE_URL = 'postgresql://postgres:ztlab112@localhost/TodoApplicationDataBase' # for postgres db connection\nSQLALCHEMY_DATABASE_URL = 'mysql+pymysql://root:ztlab112@127.0.0.1:3306/TodoApplicationDatabase'\nengine = create_engine(SQLALCHEMY_DATABASE_URL) #connect_args={'check_same_thread': False} this use only for sqllite3\nSessionLocal = sessionmaker(autocommit= False, autoflush= False,bind=engine)\nBase = declarative_base()",
+        "detail": "TodoApp.database",
+        "documentation": {}
+    },
+    {
         "label": "SQLALCHEMY_DATABASE_URL",
         "kind": 5,
         "importPath": "TodoApp.database",
         "description": "TodoApp.database",
-        "peekOfCode": "SQLALCHEMY_DATABASE_URL = 'postgresql://postgres:ztlab112@localhost/TodoApplicationDataBase' #SQLALCHEMY_DATABASE_URL = 'sqlite:///./todosapp.db'\nengine = create_engine(SQLALCHEMY_DATABASE_URL) #connect_args={'check_same_thread': False}\nSessionLocal = sessionmaker(autocommit= False, autoflush= False,bind=engine)\nBase = declarative_base()",
+        "peekOfCode": "SQLALCHEMY_DATABASE_URL = 'mysql+pymysql://root:ztlab112@127.0.0.1:3306/TodoApplicationDatabase'\nengine = create_engine(SQLALCHEMY_DATABASE_URL) #connect_args={'check_same_thread': False} this use only for sqllite3\nSessionLocal = sessionmaker(autocommit= False, autoflush= False,bind=engine)\nBase = declarative_base()",
         "detail": "TodoApp.database",
         "documentation": {}
     },
@@ -838,7 +847,7 @@
         "kind": 5,
         "importPath": "TodoApp.database",
         "description": "TodoApp.database",
-        "peekOfCode": "engine = create_engine(SQLALCHEMY_DATABASE_URL) #connect_args={'check_same_thread': False}\nSessionLocal = sessionmaker(autocommit= False, autoflush= False,bind=engine)\nBase = declarative_base()",
+        "peekOfCode": "engine = create_engine(SQLALCHEMY_DATABASE_URL) #connect_args={'check_same_thread': False} this use only for sqllite3\nSessionLocal = sessionmaker(autocommit= False, autoflush= False,bind=engine)\nBase = declarative_base()",
         "detail": "TodoApp.database",
         "documentation": {}
     },
