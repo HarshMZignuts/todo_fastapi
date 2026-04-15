@@ -424,7 +424,7 @@
         "kind": 5,
         "importPath": "TodoApp.routers.auth",
         "description": "TodoApp.routers.auth",
-        "peekOfCode": "router = APIRouter()\nSECRET_KEY = 'aa81594dab604b072d6aa5afefc1d5c07b641a6490999d9407e66685d35750ad'\nALGORITHM = 'HS256'\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\noauth2_bearer = OAuth2PasswordBearer(tokenUrl='token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:",
+        "peekOfCode": "router = APIRouter(\n    prefix= '/auth',\n    tags=['auth']\n)\nSECRET_KEY = 'aa81594dab604b072d6aa5afefc1d5c07b641a6490999d9407e66685d35750ad'\nALGORITHM = 'HS256'\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\noauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/token')\ndef get_db():\n    db = SessionLocal() ",
         "detail": "TodoApp.routers.auth",
         "documentation": {}
     },
@@ -433,7 +433,7 @@
         "kind": 5,
         "importPath": "TodoApp.routers.auth",
         "description": "TodoApp.routers.auth",
-        "peekOfCode": "SECRET_KEY = 'aa81594dab604b072d6aa5afefc1d5c07b641a6490999d9407e66685d35750ad'\nALGORITHM = 'HS256'\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\noauth2_bearer = OAuth2PasswordBearer(tokenUrl='token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()",
+        "peekOfCode": "SECRET_KEY = 'aa81594dab604b072d6aa5afefc1d5c07b641a6490999d9407e66685d35750ad'\nALGORITHM = 'HS256'\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\noauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()",
         "detail": "TodoApp.routers.auth",
         "documentation": {}
     },
@@ -442,7 +442,7 @@
         "kind": 5,
         "importPath": "TodoApp.routers.auth",
         "description": "TodoApp.routers.auth",
-        "peekOfCode": "ALGORITHM = 'HS256'\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\noauth2_bearer = OAuth2PasswordBearer(tokenUrl='token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection",
+        "peekOfCode": "ALGORITHM = 'HS256'\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\noauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection",
         "detail": "TodoApp.routers.auth",
         "documentation": {}
     },
@@ -451,7 +451,7 @@
         "kind": 5,
         "importPath": "TodoApp.routers.auth",
         "description": "TodoApp.routers.auth",
-        "peekOfCode": "bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\noauth2_bearer = OAuth2PasswordBearer(tokenUrl='token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]",
+        "peekOfCode": "bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\noauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]",
         "detail": "TodoApp.routers.auth",
         "documentation": {}
     },
@@ -460,7 +460,7 @@
         "kind": 5,
         "importPath": "TodoApp.routers.auth",
         "description": "TodoApp.routers.auth",
-        "peekOfCode": "oauth2_bearer = OAuth2PasswordBearer(tokenUrl='token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]\ndef authenticate_user(user_name:str,password:str,db):",
+        "peekOfCode": "oauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]\ndef authenticate_user(user_name:str,password:str,db):",
         "detail": "TodoApp.routers.auth",
         "documentation": {}
     },
@@ -478,7 +478,7 @@
         "kind": 2,
         "importPath": "TodoApp.routers.todos",
         "description": "TodoApp.routers.todos",
-        "peekOfCode": "def get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]\n@router.get(\"/get-all\",status_code=status.HTTP_200_OK)\nasync def read_all(db: db_dependancy):",
+        "peekOfCode": "def get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]\nuser_dependancy = Annotated[dict,Depends(get_current_user)]\n@router.get(\"/get-all\",status_code=status.HTTP_200_OK)",
         "detail": "TodoApp.routers.todos",
         "documentation": {}
     },
@@ -487,7 +487,7 @@
         "kind": 5,
         "importPath": "TodoApp.routers.todos",
         "description": "TodoApp.routers.todos",
-        "peekOfCode": "router = APIRouter()\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]\n@router.get(\"/get-all\",status_code=status.HTTP_200_OK)",
+        "peekOfCode": "router = APIRouter()\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]\nuser_dependancy = Annotated[dict,Depends(get_current_user)]",
         "detail": "TodoApp.routers.todos",
         "documentation": {}
     },
@@ -496,7 +496,16 @@
         "kind": 5,
         "importPath": "TodoApp.routers.todos",
         "description": "TodoApp.routers.todos",
-        "peekOfCode": "db_dependancy = Annotated[Session,Depends(get_db)]\n@router.get(\"/get-all\",status_code=status.HTTP_200_OK)\nasync def read_all(db: db_dependancy):\n    return db.query(Todos).all()\n@router.get(\"/todo/{todo_id}\",status_code=status.HTTP_200_OK)\nasync def read_todo(db:db_dependancy,todo_id:int = Path(gt=0)):\n    todo_model = db.query(Todos).filter(Todos.id == todo_id).first()\n    if todo_model is not None:\n        return todo_model\n    else:",
+        "peekOfCode": "db_dependancy = Annotated[Session,Depends(get_db)]\nuser_dependancy = Annotated[dict,Depends(get_current_user)]\n@router.get(\"/get-all\",status_code=status.HTTP_200_OK)\nasync def read_all(user:user_dependancy,db: db_dependancy):\n    if user is None:\n        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail='Authentication Failed')\n    return db.query(Todos).filter(Todos.owner_id == user.get('id')).all()\n@router.get(\"/todo/{todo_id}\",status_code=status.HTTP_200_OK)\nasync def read_todo(user:user_dependancy,db:db_dependancy,todo_id:int = Path(gt=0)):\n    if user is None:",
+        "detail": "TodoApp.routers.todos",
+        "documentation": {}
+    },
+    {
+        "label": "user_dependancy",
+        "kind": 5,
+        "importPath": "TodoApp.routers.todos",
+        "description": "TodoApp.routers.todos",
+        "peekOfCode": "user_dependancy = Annotated[dict,Depends(get_current_user)]\n@router.get(\"/get-all\",status_code=status.HTTP_200_OK)\nasync def read_all(user:user_dependancy,db: db_dependancy):\n    if user is None:\n        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail='Authentication Failed')\n    return db.query(Todos).filter(Todos.owner_id == user.get('id')).all()\n@router.get(\"/todo/{todo_id}\",status_code=status.HTTP_200_OK)\nasync def read_todo(user:user_dependancy,db:db_dependancy,todo_id:int = Path(gt=0)):\n    if user is None:\n        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail='Authentication Failed')",
         "detail": "TodoApp.routers.todos",
         "documentation": {}
     },
