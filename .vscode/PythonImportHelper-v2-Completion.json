@@ -40,6 +40,14 @@
         "documentation": {}
     },
     {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "Depends",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -249,7 +257,23 @@
         "documentation": {}
     },
     {
+        "label": "OAuth2PasswordBearer",
+        "importPath": "fastapi.security",
+        "description": "fastapi.security",
+        "isExtraImport": true,
+        "detail": "fastapi.security",
+        "documentation": {}
+    },
+    {
         "label": "jwt",
+        "importPath": "jose",
+        "description": "jose",
+        "isExtraImport": true,
+        "detail": "jose",
+        "documentation": {}
+    },
+    {
+        "label": "JWTError",
         "importPath": "jose",
         "description": "jose",
         "isExtraImport": true,
@@ -391,7 +415,7 @@
         "kind": 2,
         "importPath": "TodoApp.routers.auth",
         "description": "TodoApp.routers.auth",
-        "peekOfCode": "def create_access_token(user_name:str,user_id:int,expires_delta:timedelta):\n    encode = {'sub': user_name, 'id': user_id}\n    expires = datetime.now(timezone.utc) + expires_delta\n    encode.update({'exp':expires})\n    return jwt.encode(encode,SECRET_KEY,algorithm=ALGORITHM)\n@router.post(\"/auth\",status_code=status.HTTP_201_CREATED)\nasync def create_user(db:db_dependancy,\n                      create_user_request:CreateUserRequest):\n    create_user_model = Users(\n        email = create_user_request.email,",
+        "peekOfCode": "def create_access_token(user_name:str,user_id:int,expires_delta:timedelta):\n    encode = {'sub': user_name, 'id': user_id}\n    expires = datetime.now(timezone.utc) + expires_delta\n    encode.update({'exp':expires})\n    return jwt.encode(encode,SECRET_KEY,algorithm=ALGORITHM)\nasync def get_current_user(token: Annotated[str,Depends(oauth2_bearer)]):\n    try:\n        payload = jwt.decode(token,SECRET_KEY,algorithms=[ALGORITHM])\n        user_name: str = payload.get('sub')\n        user_id: str = payload.get('id')",
         "detail": "TodoApp.routers.auth",
         "documentation": {}
     },
@@ -400,7 +424,7 @@
         "kind": 5,
         "importPath": "TodoApp.routers.auth",
         "description": "TodoApp.routers.auth",
-        "peekOfCode": "router = APIRouter()\nSECRET_KEY = 'aa81594dab604b072d6aa5afefc1d5c07b641a6490999d9407e66685d35750ad'\nALGORITHM = 'HS256'\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()",
+        "peekOfCode": "router = APIRouter()\nSECRET_KEY = 'aa81594dab604b072d6aa5afefc1d5c07b641a6490999d9407e66685d35750ad'\nALGORITHM = 'HS256'\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\noauth2_bearer = OAuth2PasswordBearer(tokenUrl='token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:",
         "detail": "TodoApp.routers.auth",
         "documentation": {}
     },
@@ -409,7 +433,7 @@
         "kind": 5,
         "importPath": "TodoApp.routers.auth",
         "description": "TodoApp.routers.auth",
-        "peekOfCode": "SECRET_KEY = 'aa81594dab604b072d6aa5afefc1d5c07b641a6490999d9407e66685d35750ad'\nALGORITHM = 'HS256'\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection",
+        "peekOfCode": "SECRET_KEY = 'aa81594dab604b072d6aa5afefc1d5c07b641a6490999d9407e66685d35750ad'\nALGORITHM = 'HS256'\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\noauth2_bearer = OAuth2PasswordBearer(tokenUrl='token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()",
         "detail": "TodoApp.routers.auth",
         "documentation": {}
     },
@@ -418,7 +442,7 @@
         "kind": 5,
         "importPath": "TodoApp.routers.auth",
         "description": "TodoApp.routers.auth",
-        "peekOfCode": "ALGORITHM = 'HS256'\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]",
+        "peekOfCode": "ALGORITHM = 'HS256'\nbcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\noauth2_bearer = OAuth2PasswordBearer(tokenUrl='token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection",
         "detail": "TodoApp.routers.auth",
         "documentation": {}
     },
@@ -427,7 +451,16 @@
         "kind": 5,
         "importPath": "TodoApp.routers.auth",
         "description": "TodoApp.routers.auth",
-        "peekOfCode": "bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]\ndef authenticate_user(user_name:str,password:str,db):",
+        "peekOfCode": "bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')\noauth2_bearer = OAuth2PasswordBearer(tokenUrl='token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]",
+        "detail": "TodoApp.routers.auth",
+        "documentation": {}
+    },
+    {
+        "label": "oauth2_bearer",
+        "kind": 5,
+        "importPath": "TodoApp.routers.auth",
+        "description": "TodoApp.routers.auth",
+        "peekOfCode": "oauth2_bearer = OAuth2PasswordBearer(tokenUrl='token')\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]\ndef authenticate_user(user_name:str,password:str,db):",
         "detail": "TodoApp.routers.auth",
         "documentation": {}
     },
