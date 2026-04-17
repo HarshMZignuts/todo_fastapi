@@ -1182,7 +1182,7 @@
         "kind": 5,
         "importPath": "TodoApp.routers.todos",
         "description": "TodoApp.routers.todos",
-        "peekOfCode": "router = APIRouter()\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()\n# Depends is dependancy injection\ndb_dependancy = Annotated[Session,Depends(get_db)]\nuser_dependancy = Annotated[dict,Depends(get_current_user)]",
+        "peekOfCode": "router = APIRouter(\n     prefix= '/todos',\n    tags=['todos']\n)\ndef get_db():\n    db = SessionLocal() \n    try:\n        yield db\n    finally:\n        db.close()",
         "detail": "TodoApp.routers.todos",
         "documentation": {}
     },
@@ -1425,7 +1425,7 @@
         "kind": 2,
         "importPath": "TodoApp.test.test_todos",
         "description": "TodoApp.test.test_todos",
-        "peekOfCode": "def test_read_all_authenticated(test_todo):\n    response = client.get(\"/get-all\")\n    assert response.status_code == status.HTTP_200_OK\n    assert response.json() == [{\n        'complete': False,\n        'title': 'Learn the code',\n        'description': 'Need to learn every days',\n        'priority': 3,\n        'owner_id': 1,\n        'id': 1",
+        "peekOfCode": "def test_read_all_authenticated(test_todo):\n    response = client.get(\"/todos/get-all\")\n    assert response.status_code == status.HTTP_200_OK\n    assert response.json() == [{\n        'complete': False,\n        'title': 'Learn the code',\n        'description': 'Need to learn every days',\n        'priority': 3,\n        'owner_id': 1,\n        'id': 1",
         "detail": "TodoApp.test.test_todos",
         "documentation": {}
     },
@@ -1434,7 +1434,7 @@
         "kind": 2,
         "importPath": "TodoApp.test.test_todos",
         "description": "TodoApp.test.test_todos",
-        "peekOfCode": "def test_read_one_authenticated(test_todo):\n    response = client.get(\"/todo/1\")\n    assert response.status_code == status.HTTP_200_OK\n    assert response.json() == {\n        'complete': False,\n        'title': 'Learn the code',\n        'description': 'Need to learn every days',\n        'priority': 3,\n        'owner_id': 1,\n        'id': 1",
+        "peekOfCode": "def test_read_one_authenticated(test_todo):\n    response = client.get(\"/todos/todo/1\")\n    assert response.status_code == status.HTTP_200_OK\n    assert response.json() == {\n        'complete': False,\n        'title': 'Learn the code',\n        'description': 'Need to learn every days',\n        'priority': 3,\n        'owner_id': 1,\n        'id': 1",
         "detail": "TodoApp.test.test_todos",
         "documentation": {}
     },
@@ -1443,7 +1443,7 @@
         "kind": 2,
         "importPath": "TodoApp.test.test_todos",
         "description": "TodoApp.test.test_todos",
-        "peekOfCode": "def test_read_one_authenticated_not_found(test_todo):\n    response = client.get(\"/todo/999\")\n    assert response.status_code == 404\n    assert response.json() == {\n        'detail': 'Todo not found.'\n    }\ndef test_create_todo(test_todo):\n    request_data = {\n        'complete': False,\n        'title': 'New Todo!',",
+        "peekOfCode": "def test_read_one_authenticated_not_found(test_todo):\n    response = client.get(\"/todos/todo/999\")\n    assert response.status_code == 404\n    assert response.json() == {\n        'detail': 'Todo not found.'\n    }\ndef test_create_todo(test_todo):\n    request_data = {\n        'complete': False,\n        'title': 'New Todo!',",
         "detail": "TodoApp.test.test_todos",
         "documentation": {}
     },
@@ -1452,7 +1452,7 @@
         "kind": 2,
         "importPath": "TodoApp.test.test_todos",
         "description": "TodoApp.test.test_todos",
-        "peekOfCode": "def test_create_todo(test_todo):\n    request_data = {\n        'complete': False,\n        'title': 'New Todo!',\n        'description': 'New todo added',\n        'priority': 3,\n    }\n    response = client.post(\"/todo/\",json=request_data)\n    assert response.status_code == 201\n    db = TestingSeassionLocal()",
+        "peekOfCode": "def test_create_todo(test_todo):\n    request_data = {\n        'complete': False,\n        'title': 'New Todo!',\n        'description': 'New todo added',\n        'priority': 3,\n    }\n    response = client.post(\"/todos/todo/\",json=request_data)\n    assert response.status_code == 201\n    db = TestingSeassionLocal()",
         "detail": "TodoApp.test.test_todos",
         "documentation": {}
     },
@@ -1461,7 +1461,7 @@
         "kind": 2,
         "importPath": "TodoApp.test.test_todos",
         "description": "TodoApp.test.test_todos",
-        "peekOfCode": "def test_update_todo(test_todo):\n    request_data = {\n        'complete': False,\n        'title': 'Change the title of already saved!',\n        'description': 'Need to learn every days',\n        'priority': 5,\n    }\n    response = client.put('/todo/1',json=request_data)\n    assert response.status_code ==  204\n    db = TestingSeassionLocal()",
+        "peekOfCode": "def test_update_todo(test_todo):\n    request_data = {\n        'complete': False,\n        'title': 'Change the title of already saved!',\n        'description': 'Need to learn every days',\n        'priority': 5,\n    }\n    response = client.put('/todos/todo/1',json=request_data)\n    assert response.status_code ==  204\n    db = TestingSeassionLocal()",
         "detail": "TodoApp.test.test_todos",
         "documentation": {}
     },
@@ -1470,7 +1470,7 @@
         "kind": 2,
         "importPath": "TodoApp.test.test_todos",
         "description": "TodoApp.test.test_todos",
-        "peekOfCode": "def test_update_todo_not_found(test_todo):\n    request_data = {\n        'complete': False,\n        'title': 'Change the title of already saved!',\n        'description': 'Need to learn every days',\n        'priority': 5,\n    }\n    response = client.put('/todo/999',json=request_data)\n    assert response.status_code ==  404\n    assert response.json() == {'detail': 'Todo not found'}",
+        "peekOfCode": "def test_update_todo_not_found(test_todo):\n    request_data = {\n        'complete': False,\n        'title': 'Change the title of already saved!',\n        'description': 'Need to learn every days',\n        'priority': 5,\n    }\n    response = client.put('/todos/todo/999',json=request_data)\n    assert response.status_code ==  404\n    assert response.json() == {'detail': 'Todo not found'}",
         "detail": "TodoApp.test.test_todos",
         "documentation": {}
     },
@@ -1479,7 +1479,7 @@
         "kind": 2,
         "importPath": "TodoApp.test.test_todos",
         "description": "TodoApp.test.test_todos",
-        "peekOfCode": "def test_delete_todo(test_todo):\n    response = client.delete('/todo/1')\n    assert response.status_code == 204\n    db = TestingSeassionLocal()\n    model = db.query(Todos).filter(Todos.id == 1).first()\n    assert model is None\ndef test_delete_todo_not_found(test_todo):\n    response = client.delete('/todo/999')\n    assert response.status_code ==  404\n    assert response.json() == {'detail': 'Todo not found'}",
+        "peekOfCode": "def test_delete_todo(test_todo):\n    response = client.delete('/todos/todo/1')\n    assert response.status_code == 204\n    db = TestingSeassionLocal()\n    model = db.query(Todos).filter(Todos.id == 1).first()\n    assert model is None\ndef test_delete_todo_not_found(test_todo):\n    response = client.delete('/todos/todo/999')\n    assert response.status_code ==  404\n    assert response.json() == {'detail': 'Todo not found'}",
         "detail": "TodoApp.test.test_todos",
         "documentation": {}
     },
@@ -1488,7 +1488,7 @@
         "kind": 2,
         "importPath": "TodoApp.test.test_todos",
         "description": "TodoApp.test.test_todos",
-        "peekOfCode": "def test_delete_todo_not_found(test_todo):\n    response = client.delete('/todo/999')\n    assert response.status_code ==  404\n    assert response.json() == {'detail': 'Todo not found'}",
+        "peekOfCode": "def test_delete_todo_not_found(test_todo):\n    response = client.delete('/todos/todo/999')\n    assert response.status_code ==  404\n    assert response.json() == {'detail': 'Todo not found'}",
         "detail": "TodoApp.test.test_todos",
         "documentation": {}
     },
@@ -1497,7 +1497,7 @@
         "kind": 5,
         "importPath": "TodoApp.test.test_todos",
         "description": "TodoApp.test.test_todos",
-        "peekOfCode": "app.dependency_overrides[get_db] =  override_get_db\napp.dependency_overrides[get_current_user] =  override_get_current_user\ndef test_read_all_authenticated(test_todo):\n    response = client.get(\"/get-all\")\n    assert response.status_code == status.HTTP_200_OK\n    assert response.json() == [{\n        'complete': False,\n        'title': 'Learn the code',\n        'description': 'Need to learn every days',\n        'priority': 3,",
+        "peekOfCode": "app.dependency_overrides[get_db] =  override_get_db\napp.dependency_overrides[get_current_user] =  override_get_current_user\ndef test_read_all_authenticated(test_todo):\n    response = client.get(\"/todos/get-all\")\n    assert response.status_code == status.HTTP_200_OK\n    assert response.json() == [{\n        'complete': False,\n        'title': 'Learn the code',\n        'description': 'Need to learn every days',\n        'priority': 3,",
         "detail": "TodoApp.test.test_todos",
         "documentation": {}
     },
@@ -1506,7 +1506,7 @@
         "kind": 5,
         "importPath": "TodoApp.test.test_todos",
         "description": "TodoApp.test.test_todos",
-        "peekOfCode": "app.dependency_overrides[get_current_user] =  override_get_current_user\ndef test_read_all_authenticated(test_todo):\n    response = client.get(\"/get-all\")\n    assert response.status_code == status.HTTP_200_OK\n    assert response.json() == [{\n        'complete': False,\n        'title': 'Learn the code',\n        'description': 'Need to learn every days',\n        'priority': 3,\n        'owner_id': 1,",
+        "peekOfCode": "app.dependency_overrides[get_current_user] =  override_get_current_user\ndef test_read_all_authenticated(test_todo):\n    response = client.get(\"/todos/get-all\")\n    assert response.status_code == status.HTTP_200_OK\n    assert response.json() == [{\n        'complete': False,\n        'title': 'Learn the code',\n        'description': 'Need to learn every days',\n        'priority': 3,\n        'owner_id': 1,",
         "detail": "TodoApp.test.test_todos",
         "documentation": {}
     },
